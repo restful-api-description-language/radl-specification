@@ -1,4 +1,4 @@
-sudo: false # Run on containers rather than VMs to enable caching
+sudo: false
 cache:
   directories:
   - $HOME/.gradle
@@ -14,29 +14,14 @@ jdk:
 - openjdk7
 install: true
 script: ./gradlew build
-
-
-## Notifications
-notifications:
-  slack:
-    secure: LJfuvagJjFqaoA8AJQtfLOtymOzpifA2qUqA1XI5Kd67sVFY5BViIHZ/+qy3jV+Ve7Msl8St+XiB9zrLqKOxFNNaFvYZYgpn4fb4RDxVWipZrVY9/DRwEImzuWNsx1Il7rn9zWK0jgmIyK2DK6wtWPnZUTinHGPIw3RtvR22AyA=
-  webhooks:
-    urls:
-    - https://webhooks.gitter.im/e/9964f490aeaa2be3c3c9
-    on_success: always
-    on_failure: always
-    on_start: true
-
 after_success:
-  - ./deploy_to_bintray.sh
-
+- ./deploy_to_bintray.sh
 before_deploy:
 - gem install mime-types -v 2.6.2
-
 deploy:
   provider: releases
   api_key:
-    secure: RWpPmmzrJ2Ddx8nwG6k6UZm98o7gMRpGJ2liCFUGy5Uuf8w5AXj6xMLKFdcK3pZFSYBQ1+4DycFPAXmFCfP+nv6dX9PbDkOVB669ecnxStfVse0zXYgjuNEmhAht6wDb/O6jiNUrnyXcmQDExhXC3SigtnWcLUiRbJOYGoc3oSQ=
+    secure: dAEw8CE7ZaGY5VV0MMhAWTI4Eg4tBJnbdfGt+nV5yWbxEagn0WfJAkZTpVMhqTJrrLoJY7D3tv+cKzNTaHRUXJrijjWEbEppqK057n//cbPdPsi5On7d8o2rssXLKuV5x5Lc9u8jy/uAyR1BwXdio02JtzgfcTKuLyhIwTU+/SJsRivfOZh1CBDul30KTS5w+N7HUfFv2ciJ0nnH0eYdfVIpbmsA0x2CpFSXacJDQKPsFHhTM93OEbpQYHYqgYGNanrpQ19S8YOQieFn4TXWsKW+tPnHDLnVEkEdxSA7PuXqF7KEjHjc54S8FZdYGhGAJ3VF07LFgVhBm+qBggU8Uowr6MZdmI5a/HtqutzYPEu2jkvmWgbZeONEMrQULgVk2OF2abdgzLS/FHO5H69Bg3RNfKIGHgClzT4g26xHMS9xTuH/6gw5S9O2S6M2/7CBeKRqbuQrcynec43dHzavkngCW1d9b/fcqdL28CR8wMosHNGoDTnyqTOqAjIYi+mEvzyWRGO/rXpMxLWmEK6Ow9YTOPxzLauSF57+7DdyxXFirGxEy89K0LGMzeQXWPivkN2HZ+wnO6vKPMxaBsQJIIANRDr6v6886i2TC12FdzKq+aJA+WkECJjbMfmxausfCf1WJKotuPOMU/DGaMjGlrcTW14+wL4zWqKtieUulgo=
   file_glob: true
   file:
   - build/libs/*
