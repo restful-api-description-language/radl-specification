@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+##
+## Sample RADL file for RESTBucks.
+##
+## Copyright (c) EMC Corporation. All rights reserved.
+##
+-->
+<service name="RESTBucks" radl-version="1.0"
+    xmlns="urn:radl:service" xmlns:radl="urn:radl:service"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+  <documentation>
+    This example service follows <html:a href="http://www.infoq.com/articles/webber-rest-workflow">RESTBucks</html:a>, 
+    an online version of coffee shop Starbucks based on Gregor Hohpe's
+    <html:a href="http://www.enterpriseintegrationpatterns.com/ramblings/18_starbucks.html">observation</html:a> that
+    it is an asynchronous processing pipeline.
+  </documentation>
+
+  <entry>
+    <documentation>In an entry, the links are billboard URIs, known a priori.</documentation>
+    <link>
+      <operation name="Get menu"/>
+    </link>
+  </entry>
+
+  <documents>
+    <document name="Menu" property-group="menu">
+      <documentation>
+        Once the customer has arrived in the store, she reads the menu to see what the store offers.
+      </documentation>
+      <links>
+        <link rel="http://api.restbucks.com/linkrel/orders">
+          <operation name="Place order" to="Ordering">
+            <documentation>
+              The customer composes an order from the items on the menu and places the order with the cashier.
+            </documentation>
+            <input property-group="order"/>
+          </operation>
+        </link>
+      </links>
+    </document>
+
+    <document name="Order" property-group="order">
+      <links>
+        <link rel="edit">
+        <operation name="Change" to="Ordered">
+          <documentation>As long as the customer hasn't paid, she can change her order.</documentation>
+          <input property-group="order"/>
+        </operation>
+        <operation name="Cancel" to="Canceled">
+          <documentation>
+            The customer may decide she doesn't want anything after all and cancel the whole order.
+          </documentation>
+        </operation>
+        </link>
+        <link rel="payment">
+          <operation name="Pay" to="Receipt">
+            <documentation>The customer pays for the order.</documentation>
+            <input property-group="payment"/>          
+          </operation>
+        </link>
+      </links>
+    </document>
+
+    <document name="Receipt" property-group="receipt">
+      <links>
+        <link rel="self">
+          <operation name="Check status" to="Receipt">
+            <documentation>Check status of the order, refreshing the document.</documentation>
+          </operation>
+        </link>
+        <link rel="http://api.restbucks.com/linkrel/serving">
+            <documentation>This link appears only when the order is ready to be picked up.</documentation>
+            <transition name="Pick up order" to="Thank-you">
+              <documentation>The barista notifies the customer once he has prepared her serving.</documentation>
+            </transition>
+        </link>
+      </links>
+    </document>
+
+    <document name="Thank-you">
+      <documentation>Thank-you for doing business with RESTBucks!  We hope you enjoy your drink!</documentation>
+    </document>
+
+    <document name="Canceled">
+      <documentation>Your order has been canceled, at your request.  If you want to order something
+      else, read the menu and start over.</documentation>
+      <links>
+        <link rel="http://api.restbucks.com/linkrel/menu">
+          <operation name="Read menu" to="Menu"/>
+        </link>
+      </links>
+    </document>    
+
+  </documents>
+
+  <property-groups>
+    <property-group name="home" uri="http://schema.org/CafeOrCoffeeShop"/>
+
+    <property-group name="item" uri="http://schema.org/Product">
+      <property name="name" uri="http://schema.org/name"/>
+      <property name="size" uri="http://schema.org/height"/>
+      <property name="milk" uri="http://www.productontology.org/doc/Milk"/>
+      <property name="price" uri="http://schema.org/price" type="number"/>
+      <property name="currency" uri="http://schema.org/priceCurrency"/>
+    </property-group>
+
+    <property-group name="menu" uri="http://schema.org/menu">
+      <property-group name="item" ref="item" repeats="true"/>
+    </property-group>
+
+    <property-group name="order" uri="http://schema.org/Order">
+      <property-group name="item" ref="item" repeats="true"/>
+      <property name="customer" uri="http://schema.org/customer"/>
+      <property name="total" uri="http://schema.org/totalPrice" type="number"/>
+      <property name="currency" uri="http://schema.org/priceCurrency"/>
+    </property-group>
+
+    <property-group name="receipt" uri="http://schema.org/Order">
+      <property name="dateTime" uri="http://schema.org/orderDate" type="xsd:dateTime"/>
+      <property name="shop" uri="http://schema.org/seller"/>
+      <property-group name="item" ref="item" repeats="true"/>
+      <property name="total" uri="http://schema.org/totalPrice" type="number"/>
+      <property name="currency" uri="http://schema.org/priceCurrency"/>
+      <property name="paymentMethod" uri="http://schema.org/acceptedPaymentMethod"/>
+    </property-group>
+
+    <property-group name="payment" uri="http://reference.data.gov.uk/def/payment#payment">
+      <property name="amount" uri="http://schema.org/totalPrice" type="number"/>
+      <property name="currency" uri="http://schema.org/priceCurrency"/>
+      <property name="paymentMethod" uri="http://schema.org/acceptedPaymentMethod"/>
+      <property name="cardholderName" uri="https://w3id.org/creditcard/v1/name"/>
+      <property name="cardNumber" uri="https://w3id.org/creditcard/v1/number"/>
+      <property name="expiryMonth" uri="https://w3id.org/creditcard/v1/expiryMonth" type="number"/>
+      <property name="expiryYear" uri="https://w3id.org/creditcard/v1/expiryYear" type="number"/>
+      <property name="cardSecurityCode" uri="https://w3id.org/creditcard/v1/verificationCode"/>
+    </property-group>
+
+    <property-group name="serving" uri="http://schema.org/Order"/>
+  </property-groups>
+
+  <media-types default="application/ld+json">
+    <media-type name="application/ld+json">
+      <specification href="http://www.w3.org/TR/json-ld/"/>
+    </media-type>
+  </media-types>
+
+  <errors>
+    <error name="http://errors.restbucks.com/missing-item" status-code="400">
+      <documentation>The order you provided doesn't contain any menu item.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/unknown-item" status-code="400">
+      <documentation>The menu item you requested is unknown to the server.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/invalid-item" status-code="400">
+      <documentation>The attributes you provided are invalid for the requested menu item.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/item-out-of-stock" status-code="400">
+      <documentation>The menu item you requested is temporarily out of stock.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/missing-customer" status-code="400">
+      <documentation>The order you provided doesn't contain a customer name.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/invalid-payment" status-code="400">
+      <documentation>The payment details you provided contain invalid values.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/overpaid" status-code="400">
+      <documentation>The amount of money you paid is more than what the order costs.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/payment-not-processed" status-code="400">
+      <documentation>The payment you provided could not be processed.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/already-paid" status-code="400">
+      <documentation>The order is already paid and cannot be changed anymore.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/not-found" status-code="404">
+      <documentation>The URI you requested doesn't exists or is not accessible by you.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/method-not-allowed" status-code="405">
+      <documentation>The method you used is not supported on this URI.</documentation>
+    </error>
+    <error name="http://errors.restbucks.com/not-acceptible" status-code="406">
+      <documentation>
+        The media type you requested in the Accept header is not supported for this method on this URI.
+      </documentation>
+    </error>
+    <error name="http://errors.restbucks.com/server-error" status-code="500">
+      <documentation>
+        Something went wrong on our side. We have logged the problem so our staff can look into it. We are sorry for the
+        inconvenience.
+      </documentation>
+    </error>
+    <error name="http://errors.restbucks.com/service-unavailable" status-code="503">
+      <documentation>The server is temporarily not able to handle the request.</documentation>
+    </error>
+  </errors>
+
+  <conventions>
+    <uri-template-variables>
+      <uri-template-variable name="order-id">
+        <documentation>
+          A unique server-generated ID for an order. The client should treat this as an opaque identifier.
+        </documentation>
+      </uri-template-variable>
+    </uri-template-variables>
+  </conventions>
+
+  <resources>
+    <resource name="Home">
+      <location uri="/"/>
+      <methods>
+        <method name="GET">
+          <operations>
+            <operation ref="Get menu"/>
+          </operations>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Orders">
+      <location uri="/orders/"/>
+      <methods>
+        <method name="POST">
+          <operations>
+            <operation ref="Place order"/>
+          </operations>
+          <request/>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Order">
+      <location uri-template="/orders/{order-id}/"/>
+      <methods>
+        <method name="DELETE">
+          <operations>
+            <operation ref="Cancel"/>
+          </operations>
+        </method>
+        <method name="PUT">
+          <operations>
+            <operation ref="Change"/>
+          </operations>
+          <request/>
+          <response/>
+        </method>
+        <method name="GET">
+          <operations>
+            <operation ref="Take receipt"/>
+          </operations>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Payments">
+      <location uri-template="/orders/{order-id}/payments/"/>
+      <methods>
+        <method name="POST">
+          <operations>
+            <operation ref="Pay"/>
+          </operations>
+          <request/>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Serving">
+      <location uri-template="/orders/{order-id}/serving/"/>
+      <methods>
+        <method name="GET">
+          <operations>
+            <operation ref="Check status"/>
+          </operations>
+          <response/>
+        </method>
+        <method name="DELETE">
+          <operations>
+            <operation ref="Pick up order"/>
+          </operations>
+        </method>
+      </methods>
+    </resource>
+  </resources>
+</service>

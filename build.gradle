@@ -1,0 +1,19 @@
+plugins {
+  id 'java'
+  id 'eclipse'
+}
+
+defaultTasks 'build'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = 2.11
+}
+
+jar {
+  into ('schema') {
+    from ('schema')
+  }
+  into ('examples') {
+    from ('examples')
+  }
+}
