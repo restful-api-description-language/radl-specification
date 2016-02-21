@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/github/license/restful-api-description-language/radl-specification.svg)](https://raw.githubusercontent.com/restful-api-description-language/radl-specification/master/LICENSE)
 [![Version](https://img.shields.io/github/release/restful-api-description-language/radl-specification.svg)](https://github.com/restful-api-description-language/radl-specification/releases)
-![Build Status](https://travis-ci.org/restful-api-description-language/radl-specification.svg?branch=master) [![codecov.io](https://img.shields.io/codecov/c/github/restful-api-description-language/radl-specification.svg)](https://codecov.io/github/restful-api-description-language/radl-specification)
+![Build Status](https://travis-ci.org/restful-api-description-language/radl-specification.svg?branch=master)
 
 * [What is RADL?](#What_is_RADL)
 * [How can I get RADL?](#How_can_I_get_RADL)
@@ -60,5 +60,5 @@ want to talk about the project with like-minded individuals, we have a number of
 
 ## <a name="License"/> License ##
 
-Copyright © EMC Corporation. All rights reserved. EMC grants rights under the Apache 2.0 license.
+Copyright ï¿½ EMC Corporation. All rights reserved. EMC grants rights under the Apache 2.0 license.
 See the [`LICENSE`](https://raw.githubusercontent.com/restful-api-description-language/radl-specification/master/LICENSE) file for more information.
