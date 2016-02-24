@@ -1,27 +1,26 @@
 sudo: false
 cache:
   directories:
-  - $HOME/.gradle
-  - .gradle
+  - "$HOME/.gradle"
+  - ".gradle"
 env:
   global:
   - USER=ApiSecRay
     # BINTRAY API KEY:
   - secure: XgXG6UVWg8+MpXXaNH0c3w3Tsp9XBi1eXPbGUi16ztZUS/DVDnCbrFFX1ABXz4Dw+qCER67hjtcL6O0bczt1oJFFurC1tMzSXqZSrVIDcDAEVKCi08dy73yxm0QX4HFWg/z67O0DzJi8teYMcItSgBAsKbhnVEV+mnYxS/wR86c=
-
 language: java
 jdk:
 - openjdk7
 install: true
-script: ./gradlew build
+script: "./gradlew build"
 after_success:
-- ./deploy_to_bintray.sh
+- "./deploy_to_bintray.sh"
 before_deploy:
 - gem install mime-types -v 2.6.2
 deploy:
   provider: releases
   api_key:
-    secure: dAEw8CE7ZaGY5VV0MMhAWTI4Eg4tBJnbdfGt+nV5yWbxEagn0WfJAkZTpVMhqTJrrLoJY7D3tv+cKzNTaHRUXJrijjWEbEppqK057n//cbPdPsi5On7d8o2rssXLKuV5x5Lc9u8jy/uAyR1BwXdio02JtzgfcTKuLyhIwTU+/SJsRivfOZh1CBDul30KTS5w+N7HUfFv2ciJ0nnH0eYdfVIpbmsA0x2CpFSXacJDQKPsFHhTM93OEbpQYHYqgYGNanrpQ19S8YOQieFn4TXWsKW+tPnHDLnVEkEdxSA7PuXqF7KEjHjc54S8FZdYGhGAJ3VF07LFgVhBm+qBggU8Uowr6MZdmI5a/HtqutzYPEu2jkvmWgbZeONEMrQULgVk2OF2abdgzLS/FHO5H69Bg3RNfKIGHgClzT4g26xHMS9xTuH/6gw5S9O2S6M2/7CBeKRqbuQrcynec43dHzavkngCW1d9b/fcqdL28CR8wMosHNGoDTnyqTOqAjIYi+mEvzyWRGO/rXpMxLWmEK6Ow9YTOPxzLauSF57+7DdyxXFirGxEy89K0LGMzeQXWPivkN2HZ+wnO6vKPMxaBsQJIIANRDr6v6886i2TC12FdzKq+aJA+WkECJjbMfmxausfCf1WJKotuPOMU/DGaMjGlrcTW14+wL4zWqKtieUulgo=
+    secure: r18kpY7cCCQW04+2oP7ZymIdkFgzI0OVm7yY1f35Pk+XMMALGsHr9ERgvpIeXSP76vVoB6vwdqCgZkwhiwGJUiftJ+qh9W0UExdtOdsr/v1DyA6Ci//Rj+GUcW+mbzLnc23KjsfOqFPMnA4hWSycK27U9yCmekAfq68Ce0nGhBpiEUSYeCOQJ1d1fDij7DqQdYzqn0hnCIStE0164l8rB8X4c2woUkVNJkJIzw9IFakTOkAR2W3O/i5Hnz/+pD9RbfiRHxs+f05gUl6b2DDwiLAms1zzOIf/EcnMi1ajYFMMhj0+utArO4jKDAxeJ65ETTbKL3uY+HzTzSpUBEq3RSxU2OvQI6iUe6tKCSODv2ibD+5mloaZwoA6VCkl9/8zveg4gAUCdAYySmxkNe7+7+v/MvFztgZuqsui9k56zW4XwT92kPGy0JtbXiVlT53BkJAk0NnCcL9f0X9OUpDt3nL67/Y2mXzrGJCsNXeuvnk/HQh7KH5OyCYV3cCI9nTEQwyg8dc3zUSkjCSGvGNsMDo6FaVPxNmxErUTqz58QBcPQiXZbzONnYYMNziPmQqI0ggHYp+V1St2CS7H+I2pD+3/T0bg82iq4Bj1KUJjgXsLFSnZQtvcq8U4TFa/hVP4P1IXPSUYeBJz5LqaCIqpqooSq22kppWZdZaYN8Ezff8=
   file_glob: true
   file:
   - build/libs/*
