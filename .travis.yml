@@ -22,10 +22,11 @@ deploy:
     on:
       repo: restful-api-description-language/radl-specification
       tags: true
-      all_branches: true
   - provider: bintray
     user: ApiSecRay
     key:
       secure: "B/54MZe8sacIVx3LOAPnJuHQ4P7L1jokJXn3kLBdb6aTk1a5ECE/PpgshXYN4AQdlEVk/DdDAl/VD0fKF8ShzV+tvvmhyA9AtsPScua/r4FC+p3nZdjeROXbkbaUK9JiqJk09qeWxpHBza1Ulh/5JZreR06GA1YfNSjc60etNdsO5MPzdRZa6hdsoB3aFKJswmskkdrWHqPlrI6I7mgbR1iuJFVmsg2zQTeJeMriOengByoRBVk9sgMNZQHs4gHXNY5fDndL9UUDTeeMp42j0+twJGa+EekdEd0EZFNHOd77nLxk/m/XXCnzk6y+O/KT0hed6JsTmdWp4JXPKhrmJ/uBCSKLqJBWCcwI+89GaVS+7HYmUhdPUPs4eU0E5u1t2kWkB4zQyr6eLKPcj5rSVlosasAj+ykxfHdbzkyu+jbc4I5X1r0WAslYCwwYd4rGDcHplMZQ/U8OCOP2EkOTkkK62qQr5HNIL4VaKUElZEMjkreRKpTY/IIe9asic0am0fYaa+bST9+YWZZeE8LnCawDyp2qPexUH2wBpcp7MZj3z2qsVR0JLcczihMzaijy3eRtou9OOESR6IwOx/uOQMcOcy5QQhunh/crWjP5A/k6b8CQDnQDvs5RMDIzd2IfVTPgDKU3+Yzb+mJm+AKDOA8KjS09NJ0D6HLYGRQT0nU="
     file_glob: true
     file: build/libs/*
+    on:
+      tags: true
