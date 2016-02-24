@@ -17,6 +17,9 @@ jar {
     from ('examples')
   }
   archiveName = "$project.name-${env('TRAVIS_TAG',version)}.${env('TRAVIS_BUILD_NUMBER','0')}.jar"
+  doLast {
+    logger.warn "Created jar at $archivePath"
+  }
 }
 
 def env(name, defaultValue) {
