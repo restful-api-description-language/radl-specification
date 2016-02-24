@@ -18,8 +18,7 @@ deploy:
     api_key:
       secure: r18kpY7cCCQW04+2oP7ZymIdkFgzI0OVm7yY1f35Pk+XMMALGsHr9ERgvpIeXSP76vVoB6vwdqCgZkwhiwGJUiftJ+qh9W0UExdtOdsr/v1DyA6Ci//Rj+GUcW+mbzLnc23KjsfOqFPMnA4hWSycK27U9yCmekAfq68Ce0nGhBpiEUSYeCOQJ1d1fDij7DqQdYzqn0hnCIStE0164l8rB8X4c2woUkVNJkJIzw9IFakTOkAR2W3O/i5Hnz/+pD9RbfiRHxs+f05gUl6b2DDwiLAms1zzOIf/EcnMi1ajYFMMhj0+utArO4jKDAxeJ65ETTbKL3uY+HzTzSpUBEq3RSxU2OvQI6iUe6tKCSODv2ibD+5mloaZwoA6VCkl9/8zveg4gAUCdAYySmxkNe7+7+v/MvFztgZuqsui9k56zW4XwT92kPGy0JtbXiVlT53BkJAk0NnCcL9f0X9OUpDt3nL67/Y2mXzrGJCsNXeuvnk/HQh7KH5OyCYV3cCI9nTEQwyg8dc3zUSkjCSGvGNsMDo6FaVPxNmxErUTqz58QBcPQiXZbzONnYYMNziPmQqI0ggHYp+V1St2CS7H+I2pD+3/T0bg82iq4Bj1KUJjgXsLFSnZQtvcq8U4TFa/hVP4P1IXPSUYeBJz5LqaCIqpqooSq22kppWZdZaYN8Ezff8=
     skip_cleanup: true
-    file_glob: true
-    file: build/libs/*
+    file: build/libs/radl-specification-$TRAVIS_TAG.$TRAVIS_BUILD_NUMBER
     on:
       condition: "! -z '$TRAVIS_TAG'"
       tags: true
@@ -28,8 +27,7 @@ deploy:
     key:
       secure: "B/54MZe8sacIVx3LOAPnJuHQ4P7L1jokJXn3kLBdb6aTk1a5ECE/PpgshXYN4AQdlEVk/DdDAl/VD0fKF8ShzV+tvvmhyA9AtsPScua/r4FC+p3nZdjeROXbkbaUK9JiqJk09qeWxpHBza1Ulh/5JZreR06GA1YfNSjc60etNdsO5MPzdRZa6hdsoB3aFKJswmskkdrWHqPlrI6I7mgbR1iuJFVmsg2zQTeJeMriOengByoRBVk9sgMNZQHs4gHXNY5fDndL9UUDTeeMp42j0+twJGa+EekdEd0EZFNHOd77nLxk/m/XXCnzk6y+O/KT0hed6JsTmdWp4JXPKhrmJ/uBCSKLqJBWCcwI+89GaVS+7HYmUhdPUPs4eU0E5u1t2kWkB4zQyr6eLKPcj5rSVlosasAj+ykxfHdbzkyu+jbc4I5X1r0WAslYCwwYd4rGDcHplMZQ/U8OCOP2EkOTkkK62qQr5HNIL4VaKUElZEMjkreRKpTY/IIe9asic0am0fYaa+bST9+YWZZeE8LnCawDyp2qPexUH2wBpcp7MZj3z2qsVR0JLcczihMzaijy3eRtou9OOESR6IwOx/uOQMcOcy5QQhunh/crWjP5A/k6b8CQDnQDvs5RMDIzd2IfVTPgDKU3+Yzb+mJm+AKDOA8KjS09NJ0D6HLYGRQT0nU="
     skip_cleanup: true
-    file_glob: true
-    file: build/libs/*
+    file: build/libs/radl-specification-$TRAVIS_TAG.$TRAVIS_BUILD_NUMBER
     on:
       condition: "! -z '$TRAVIS_TAG'"
       tags: true
