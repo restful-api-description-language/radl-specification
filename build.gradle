@@ -16,4 +16,10 @@ jar {
   into ('examples') {
     from ('examples')
   }
+  archiveName = "$project.name-${env('TRAVIS_TAG',version)}.${env('TRAVIS_BUILD_NUMBER','0')}.jar"
+}
+
+def env(name, defaultValue) {
+  def result = System.getenv(name)
+  result == null ? defaultValue : result
 }
