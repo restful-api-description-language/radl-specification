@@ -1,3 +1,5 @@
+#!/bin/bash
+set -ev
 if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
   for path in build/libs/*; do
     version=$(basename $path | awk -F- '{print $3}' | cut -d. -f1-3)
