@@ -24,5 +24,5 @@ jar {
 
 def env(name, defaultValue) {
   def result = System.getenv(name)
-  result == null ? defaultValue : result
+  result == null || result.isEmpty() ? defaultValue : result
 }
