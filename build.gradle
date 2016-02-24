@@ -23,3 +23,11 @@ def env(name, defaultValue) {
   def result = System.getenv(name)
   result == null || result.isEmpty() ? defaultValue : result
 }
+
+task printEnv << {
+  System.getenv().each {
+    logger.warn "$it.key = $it.value"
+  }
+}
+
+build.dependsOn printEnv
